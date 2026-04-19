@@ -5,7 +5,7 @@ model_type=(1 2)
 
 mkdir -p saved_run
 
-# -j 4 runs 4 jobs at a time. Adjust this based on your CPU cores.
+# -j 8 runs 8 jobs at a time. Adjust this based on your CPU cores.
 # ::: passes the arrays as arguments to the command.
 parallel -j 8 python src/engine.py \
     --num_sim 1000 \
