@@ -5,14 +5,9 @@ model_type=(1 2)
 for i in "${sup_prob[@]}"; do
     for j in "${env_pop[@]}"; do
         for k in "${model_type[@]}"; do
-            echo "Running Monte Carlo simulation on 
-                    Superspreader probability: ${i}
-                    Environment population: ${j}
-                    Model type: ${k}"
-                
             python src/engine.py \
                 --num_sim 150 \
-                --save_path log \
+                --save_path saved_run \
                 --sup_prob $i \
                 --env_pop $j \
                 --model_type $k

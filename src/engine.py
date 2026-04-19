@@ -1,5 +1,6 @@
 import numpy as np
 import argparse
+import logging
 
 from individual import Individual
 from variables import *
@@ -69,6 +70,19 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    logging.basicConfig(
+        filename='output.log',
+        filemode='a',
+        encoding='utf-8', 
+        level=logging.DEBUG,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    
+    logging.info(f"Running Monte Carlo simulation on\n \
+            Superspreader probability:  {args.sup_prob}\n \
+            Environment population:     {args.env_pop}\n \
+            Model type:                 {args.model_type}")
+    
     total_percolations = 0
     all_epidemic_curves = []
     
@@ -93,4 +107,4 @@ if __name__ == "__main__":
     filename = f"results_sup{args.sup_prob}_pop{args.env_pop}_mod{args.model_type}.npz"
     np.savez(f"{args.save_path}/{filename}", perc_prob=percolation_probability, epi_curve=average_curve)
     
-    print(f"Finished! Percolation Prob: {percolation_probability}\n")
+    logging.info(f"Finished! Percolation Prob: {percolation_probability}\n")
