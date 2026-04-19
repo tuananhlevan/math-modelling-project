@@ -8,7 +8,6 @@ class Individual:
         self.coord = [np.random.uniform(0, 1) * ENV_WIDTH, np.random.uniform(0, 1) * ENV_WIDTH]
         self.super_spreader = False
         
-    
     def euclidean_distance(self, other):
         x_delta = abs(self.coord[0] - other.coord[0])
         if x_delta > (1 / 2 * ENV_WIDTH):
