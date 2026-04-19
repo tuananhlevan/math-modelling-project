@@ -25,7 +25,7 @@ def initialize(super_spreader_prob, environment_population):
     
             
 def main_loop(sup_prob, env_pop, model_type):
-    count_new_infected = [] # size = number of time steps
+    count_new_infected = [1] # size = number of time steps
     population = initialize(sup_prob, env_pop) # size = ENV_POP
     
     percolates_threshold = ENV_WIDTH * (1 - 1 / np.sqrt(env_pop))
@@ -55,7 +55,7 @@ def main_loop(sup_prob, env_pop, model_type):
     
         if any(ind.coord[1] > percolates_threshold for ind in current_new_infected):
             percolates = True
-            break
+            # break
     
     return count_new_infected, percolates
 
@@ -78,10 +78,10 @@ if __name__ == "__main__":
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
     
-    logging.info(f"Running Monte Carlo simulation on\n \
-            Superspreader probability:  {args.sup_prob}\n \
-            Environment population:     {args.env_pop}\n \
-            Model type:                 {args.model_type}")
+    # logging.info(f"Running Monte Carlo simulation on\n \
+    #                 Superspreader probability:  {args.sup_prob}\n \
+    #                 Environment population:     {args.env_pop}\n \
+    #                 Model type:                 {args.model_type}")
     
     total_percolations = 0
     all_epidemic_curves = []
@@ -106,5 +106,10 @@ if __name__ == "__main__":
     
     filename = f"results_sup{args.sup_prob}_pop{args.env_pop}_mod{args.model_type}.npz"
     np.savez(f"{args.save_path}/{filename}", perc_prob=percolation_probability, epi_curve=average_curve)
+    
+    logging.info(f"Running Monte Carlo simulation on\n \
+                    Superspreader probability:  {args.sup_prob}\n \
+                    Environment population:     {args.env_pop}\n \
+                    Model type:                 {args.model_type}")
     
     logging.info(f"Finished! Percolation Prob: {percolation_probability}\n")
