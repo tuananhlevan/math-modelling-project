@@ -92,17 +92,18 @@ if __name__ == "__main__":
         if percolated:
             total_percolations += 1
             
-        all_epidemic_curves.append(curve)
+            all_epidemic_curves.append(curve)
         
     # Calculate the percolation probability for this specific parameter set
     percolation_probability = total_percolations / args.num_sim
     
-    # Pad curves with zeros if they ended early so we can average them cleanly
-    max_length = max(len(c) for c in all_epidemic_curves)
-    padded_curves = [c + [0] * (max_length - len(c)) for c in all_epidemic_curves]
-    
-    # Calculate the average epidemic curve
-    average_curve = np.mean(padded_curves, axis=0)
+    # Pad curves with zeros if they ended early
+    if len(all_epidemic_curves) > 0:
+        max_length = max(len(c) for c in all_epidemic_curves)
+        padded_curves = [c + [0] * (max_length - len(c)) for c in all_epidemic_curves]
+        average_curve = np.mean(padded_curves, axis=0)
+    else:
+        average_curve = np.array([0]) # Default if no epidemics occurred
     
     filename = f"results_sup{args.sup_prob}_pop{args.env_pop}_mod{args.model_type}.npz"
     np.savez(f"{args.save_path}/{filename}", perc_prob=percolation_probability, epi_curve=average_curve)
@@ -110,6 +111,7 @@ if __name__ == "__main__":
     logging.info(f"Running Monte Carlo simulation on\n \
                     Superspreader probability:  {args.sup_prob}\n \
                     Environment population:     {args.env_pop}\n \
-                    Model type:                 {args.model_type}")
+                    Model type:                 {args.model_type}\n \
+                    Finished! Percolation Prob: {percolation_probability}\n")
     
-    logging.info(f"Finished! Percolation Prob: {percolation_probability}\n")
+    # logging.info(f"Finished! Percolation Prob: {percolation_probability}\n")

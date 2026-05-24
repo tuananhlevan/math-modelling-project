@@ -8,7 +8,7 @@ mkdir -p saved_run
 # -j 8 runs 8 jobs at a time. Adjust this based on your CPU cores.
 # ::: passes the arrays as arguments to the command.
 parallel -j 8 python src/engine.py \
-    --num_sim 1000 \
+    --num_sim 300 \
     --save_path saved_run \
     --sup_prob {1} \
     --env_pop {2} \

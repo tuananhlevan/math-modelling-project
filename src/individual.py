@@ -14,8 +14,8 @@ class Individual:
             x_delta = ENV_WIDTH - x_delta
         
         y_delta = abs(self.coord[1] - other.coord[1])
-        if y_delta > (1 / 2 * ENV_WIDTH):
-            y_delta = ENV_WIDTH - y_delta
+        # if y_delta > (1 / 2 * ENV_WIDTH):
+        #     y_delta = ENV_WIDTH - y_delta
         
         return np.sqrt(pow(x_delta, 2) + pow(y_delta, 2))
     
