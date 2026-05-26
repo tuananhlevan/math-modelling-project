@@ -53,7 +53,7 @@ def main_loop(sup_prob, env_pop, model_type):
                 current_new_infected.append(ind)
         count_new_infected.append(len(current_new_infected))
     
-        if any(ind.coord[1] > percolates_threshold for ind in current_new_infected):
+        if any(ind.coord[1] >= percolates_threshold for ind in current_new_infected):
             percolates = True
             # break
     
@@ -78,11 +78,6 @@ if __name__ == "__main__":
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
     
-    # logging.info(f"Running Monte Carlo simulation on\n \
-    #                 Superspreader probability:  {args.sup_prob}\n \
-    #                 Environment population:     {args.env_pop}\n \
-    #                 Model type:                 {args.model_type}")
-    
     total_percolations = 0
     all_epidemic_curves = []
     
@@ -91,8 +86,7 @@ if __name__ == "__main__":
         
         if percolated:
             total_percolations += 1
-            
-            all_epidemic_curves.append(curve)
+        all_epidemic_curves.append(curve)
         
     # Calculate the percolation probability for this specific parameter set
     percolation_probability = total_percolations / args.num_sim
@@ -112,6 +106,4 @@ if __name__ == "__main__":
                     Superspreader probability:  {args.sup_prob}\n \
                     Environment population:     {args.env_pop}\n \
                     Model type:                 {args.model_type}\n \
-                    Finished! Percolation Prob: {percolation_probability}\n")
-    
-    # logging.info(f"Finished! Percolation Prob: {percolation_probability}\n")
+                    Percolation Prob: {percolation_probability}\n")
