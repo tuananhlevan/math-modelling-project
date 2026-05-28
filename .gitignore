@@ -1,5 +1,4 @@
 .venv
 .vscode
-saved_run
 output.log
 src/__pycache__

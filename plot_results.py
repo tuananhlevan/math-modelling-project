@@ -1,11 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+import glob
 
 def pad_or_truncate(curve, target_len=41):
-    """
-    Cuts the array if it's longer than target_len, 
-    or zero-pads it if it's shorter.
-    """
     if len(curve) > target_len:
         return curve[:target_len]
     else:
@@ -35,9 +33,51 @@ def plot_epi_curve():
     plt.legend()
     plt.savefig("plots/epidemic_curve.png")
     
-def plot_perc_prob():
-    pass
+def plot_perc_prob(model_type, filename):
+    # Retrieve all files for the requested model_type
+    files = glob.glob(f"saved_run/results_sup*_pop*_mod{model_type}.npz")
+    
+    # Dictionary to organize data: { sup_prob: { density: perc_prob } }
+    data_map = {}
+    
+    for file in files:
+        # Extract parameters from the filename (e.g., results_sup0.2_pop450_mod2.npz)
+        parts = os.path.basename(file).split('_')
+        sup = float(parts[1].replace('sup', ''))
+        pop = int(parts[2].replace('pop', ''))
+        
+        # Convert population to Density (rho * pi * r0^2)
+        # Area = 10x10 = 100, r0 = 1
+        density = (pop / 100.0) * np.pi * (1**2)
+        
+        data = np.load(file)
+        prob = data['perc_prob']
+        
+        if sup not in data_map:
+            data_map[sup] = []
+        data_map[sup].append((density, prob))
+    plt.figure(figsize=(7, 5))
+    
+    # Sort lambda (sup_prob) values so the legend is in order
+    for sup in sorted(data_map.keys()):
+        # Sort by density to draw a clean line
+        sorted_points = sorted(data_map[sup], key=lambda x: x[0])
+        densities = [p[0] for p in sorted_points]
+        probs = [p[1] for p in sorted_points]
+        
+        # Use different markers for different lambda values
+        marker = 'o' if sup == 0.0 else ('s' if sup == 0.2 else '^')
+        plt.plot(densities, probs, label=f"λ={sup}", marker=marker, linestyle='-')
+        
+    plt.xlabel(r"Density ($\rho \pi r_0^2$)")
+    plt.ylabel("Percolation Probability")
+    plt.xlim(0, 25)
+    plt.ylim(0, 1.05)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f"plots/{filename}.png")
+    plt.close()
 
 if __name__ == "__main__":
-    plot_epi_curve()
-    # plot_perc_prob()
+    # plot_epi_curve()
+    plot_perc_prob(1, "percolation_probability_strong_model")
