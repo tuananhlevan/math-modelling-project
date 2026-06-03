@@ -2,8 +2,8 @@ import numpy as np
 import argparse
 import logging
 
-from individual import Individual
-from variables import *
+from src.individual import Individual
+from src.variables import *
 
 def initialize(super_spreader_prob, environment_population):
     population = []
@@ -26,7 +26,10 @@ def initialize(super_spreader_prob, environment_population):
             
 def main_loop(sup_prob, env_pop, model_type):
     count_new_infected = [1] # size = number of time steps
+    rf_curve = [0.0]
+    
     population = initialize(sup_prob, env_pop) # size = ENV_POP
+    patient_zero = population[0]
     
     percolates_threshold = ENV_WIDTH * (1 - 1 / np.sqrt(env_pop))
     percolates = False
@@ -52,12 +55,29 @@ def main_loop(sup_prob, env_pop, model_type):
             if ind.health_state == "I":
                 current_new_infected.append(ind)
         count_new_infected.append(len(current_new_infected))
+        
+        max_dist = 0.0
+        for ind in population:
+            if ind.health_state in ["I", "R"]:
+                # Shortest X distance (Wrapped cylinder)
+                dx = abs(ind.coord[0] - patient_zero.coord[0])
+                if dx > ENV_WIDTH / 2: 
+                    dx = ENV_WIDTH - dx
+                    
+                # True Y distance (Unwrapped)
+                dy = abs(ind.coord[1] - patient_zero.coord[1])
+                
+                dist = np.sqrt(dx**2 + dy**2)
+                if dist > max_dist:
+                    max_dist = dist
+        
+        rf_curve.append(max_dist)
     
         if any(ind.coord[1] >= percolates_threshold for ind in current_new_infected):
             percolates = True
             # break
     
-    return count_new_infected, percolates
+    return count_new_infected, percolates, rf_curve
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -1,6 +1,6 @@
 #!/bin/bash
 sup_prob=(0 0.2 0.4 0.6 0.8 1)
-env_pop=(150 300 450 600 750 900)
+env_pop=(80 159 239 318 398 477 557 637 716 796)
 model_type=(1 2)
 
 mkdir -p saved_run

@@ -1,12 +1,15 @@
 import numpy as np
 
-from variables import *
+from src.variables import *
 
 class Individual:
     def __init__(self):
         self.health_state = "S" # ["S", "R", "I"]
         self.coord = [np.random.uniform(0, 1) * ENV_WIDTH, np.random.uniform(0, 1) * ENV_WIDTH]
         self.super_spreader = False
+        
+        self.infected_by = None  # Reference to the individual who transmitted the disease
+        self.links_count = 0     # Number of secondary infections caused by this person
         
     def euclidean_distance(self, other):
         x_delta = abs(self.coord[0] - other.coord[0])
