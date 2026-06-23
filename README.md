@@ -25,6 +25,9 @@ xdg-open demo/index.html
 
 # On macOS:
 open demo/index.html
+
+# On Windows (Command Prompt / PowerShell):
+start demo\index.html
 ```
 
 **Features:**
