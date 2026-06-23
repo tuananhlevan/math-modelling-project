@@ -69,7 +69,8 @@ def plot_fig_3():
         probs = [p[1] for p in sorted_points]
         
         marker = 'o' if sup == 0.0 else ('s' if sup == 0.2 else '^')
-        plt.plot(densities, probs, label=f"λ={sup}", marker=marker, linestyle='-')
+        errs = [np.sqrt(p * (1 - p) / 1000) for p in probs]
+        plt.errorbar(densities, probs, yerr=errs, label=f"λ={sup}", marker=marker, linestyle='-', capsize=3)
         
     plt.xlabel(r"Density ($\rho \pi r_0^2$)")
     plt.ylabel("Percolation Probability")
@@ -113,7 +114,8 @@ def plot_fig_4():
         probs = [p[1] for p in sorted_points]
         
         marker = 'o' if sup == 0.0 else ('s' if sup == 0.2 else '^')
-        plt.plot(densities, probs, label=f"λ={sup}", marker=marker, linestyle='-')
+        errs = [np.sqrt(p * (1 - p) / 1000) for p in probs]
+        plt.errorbar(densities, probs, yerr=errs, label=f"λ={sup}", marker=marker, linestyle='-', capsize=3)
         
     plt.xlabel(r"Density ($\rho \pi r_0^2$)")
     plt.ylabel("Percolation Probability")
@@ -610,12 +612,12 @@ def plot_fig_15():
     
 
 if __name__ == "__main__":
-    plot_fig_8()
     plot_fig_3()
     plot_fig_4()
     plot_fig_5()
     plot_fig_6()
     plot_fig_7()
+    plot_fig_8()
     
     N_density_15 = 477
     # Figure 9: Strong Infectiousness Model

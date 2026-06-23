@@ -1,4 +1,9 @@
 .venv
 .vscode
 output.log
-src/__pycache__
+saved_run/
+__pycache__
+run
+report/*
+!report/main.pdf
+scratch_sense.py
