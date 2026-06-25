@@ -102,7 +102,7 @@ if __name__ == "__main__":
     all_epidemic_curves = []
     
     for _ in range(args.num_sim):
-        curve, percolated = main_loop(sup_prob=args.sup_prob, env_pop=args.env_pop, model_type=args.model_type)
+        curve, percolated, _ = main_loop(sup_prob=args.sup_prob, env_pop=args.env_pop, model_type=args.model_type)
         
         if percolated:
             total_percolations += 1

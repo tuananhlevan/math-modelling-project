@@ -7,3 +7,4 @@ run
 report/*
 !report/main.pdf
 scratch_sens.py
+presentation/*.txt
