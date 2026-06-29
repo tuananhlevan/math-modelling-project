@@ -1,14 +1,6 @@
 INIT_INFECT = 1
-
-ENV_WIDTH = 10  # 10 * INFECT_CUTOFF
-# ENV_POP = 150   # 150 - 900
-
+ENV_WIDTH = 10
 INFECT_CUTOFF = 1
 SUPER_INFECT = 1
 INFECT_ALPHA = 2
-
 RECOVER_PROB = 1
-
-# MODEL_TYPE = 1    # 1, 2
-
-# SUPERSPREADER_PROB = 0.2    # 0 - 1 at your choice, preferably [0, 0.2, 0.4, 0.6, 0.8, 1]

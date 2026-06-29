@@ -7,7 +7,7 @@ This repository contains a computational reimplementation of the spatial SIR epi
 ## Project Structure
 
 - `src/`: The core Python simulation engine utilizing Monte Carlo methods.
-- `plot_results.py`: Script to generate all statistical figures and route-of-infection diagrams.
+- `plotting/`: A package containing individual scripts to generate statistical figures and route-of-infection diagrams, along with a `main.py` entry point.
 - `plots/`: Output directory containing generated data visualizations.
 - `report/`: The LaTeX source code and compiled PDF for the technical modeling report.
 - `demo/`: An interactive web-based visual simulation.
@@ -57,8 +57,10 @@ python -m src.engine \
 *Note: `model_type 1` is the Strong Infectiousness model. `model_type 2` is the Hub model.*
 
 ### Plotting
-To regenerate all the plots used in the report (including percolation probability, critical density, and network plots), run:
+To regenerate all the plots used in the report (including percolation probability, critical density, and network plots), run the main entry point:
 ```bash
-python plot_results.py
+python -m plotting.main
 ```
-This script will parse the `.npz` files in `saved_run/` and output `.png` figures to the `plots/` directory.
+Alternatively, you can generate individual figures by running their respective scripts (e.g., `python -m plotting.plot_fig_5`).
+
+These scripts will parse the `.npz` files in `saved_run/` and output `.png` figures to the `plots/` directory.
