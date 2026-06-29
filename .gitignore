@@ -9,3 +9,4 @@ report/*
 scratch_sens.py
 presentation/*.txt
 .codegraph
+run_simulations_parallel.sh
