@@ -13,7 +13,7 @@ generate_tasks() {
                 if [ "$POP" -eq 0 ]; then
                     continue
                 fi
-                echo "python -m src.engine --sup_prob $SUP --env_pop $POP --model_type $MOD --num_sim $NUM_SIM --save_path ./saved_run/"
+                echo "python -m src.engine --sup_prob $SUP --env_pop $POP --model_type $MOD --num_sim $NUM_SIM --save_path /kaggle/working"
             done
         done
     done
