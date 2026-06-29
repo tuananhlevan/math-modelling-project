@@ -45,7 +45,13 @@ pip install numpy matplotlib
 ```
 
 ### Running the Engine
-You can manually run the Monte Carlo simulation engine and save the output array:
+You can run the full suite of simulations across varying network densities and parameters (as specified in the reference paper) using the provided bash script:
+```bash
+./run_simulations.sh
+```
+This script sweeps through different density values and models, automatically saving the output array `.npz` files into the `saved_run/` directory.
+
+Alternatively, you can manually run a single Monte Carlo simulation:
 ```bash
 python -m src.engine \
   --sup_prob 0.2 \
